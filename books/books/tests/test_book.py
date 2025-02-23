@@ -1,4 +1,5 @@
 import unittest
+import os
 from scrapy.http import HtmlResponse, Request
 from books.items import BooksItem
 from books.spiders.book import BookSpider
@@ -7,8 +8,12 @@ class BookSpiderTest(unittest.TestCase):
     def setUp(self):
         self.spider = BookSpider()
         
-        with open("sample.html", "r", encoding="utf-8") as file:
-            self.example_html = file.read() 
+        # Construct the path to sample.html relative to this test file's location
+        test_dir = os.path.dirname(__file__)
+        sample_html_path = os.path.join(test_dir, "sample.html")
+        
+        with open(sample_html_path, "r", encoding="utf-8") as file:
+            self.example_html = file.read()  
         
         self.response = HtmlResponse(
             url="https://books.toscrape.com",

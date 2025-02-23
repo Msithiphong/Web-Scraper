@@ -15,6 +15,7 @@ NEWSPIDER_MODULE = "books.spiders"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "books (+http://www.yourdomain.com)"
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -50,9 +51,10 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    "books.middlewares.BooksDownloaderMiddleware": 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+    "scrapy.downloadermiddlewares.useragent.UserAgentMiddleware": None,
+    "scrapy_user_agents.middlewares.RandomUserAgentMiddleware": 400,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -96,3 +98,9 @@ MONGO_DATABASE = "books_db"
 
 LOG_LEVEL = "WARNING"
 LOG_FILE = "book_scraper.log"
+
+RETRY_TIMES = 3
+RETRY_HTTP_CODES = [500, 429]
+
+
+DOWNLOAD_DELAY = 2
